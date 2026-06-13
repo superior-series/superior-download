@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Superior Download</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css?v=3">
+  <script src="/static/theme.js"></script>
+  <script src="/static/auth.js"></script>
+</head>
+<body>
+
+<!-- ===== Auth Screen ===== -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">Superior Download</div>
+    <div class="auth-tagline">画像ダウンローダー</div>
+    <p class="auth-message">ご利用にはログインが必要です</p>
+    <div class="form-field">
+      <label class="field-label" for="auth-email">メールアドレス</label>
+      <input type="email" id="auth-email" placeholder="your@email.com" autocomplete="email">
+    </div>
+    <div class="form-field">
+      <label class="field-label" for="auth-password">パスワード</label>
+      <input type="password" id="auth-password" placeholder="パスワード" autocomplete="current-password">
+    </div>
+    <button id="auth-login-btn" class="btn btn--primary auth-btn">ログイン</button>
+    <div id="auth-error" class="auth-error" aria-live="polite"></div>
+  </div>
+</div>
+
+<div id="app-content">
+
+<!-- ===== Header ===== -->
+<header id="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <span class="header-title">Superior Download</span>
+      <span class="header-sub">画像ダウンローダー</span>
+    </div>
+    <div class="header-actions">
+      <button id="theme-toggle" class="icon-btn" title="テーマ切替">🌙</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Main ===== -->
+<main class="container">
+
+  <!-- ダウンロードリスト -->
+  <section class="card">
+    <h2 class="card-title">ダウンロードリスト</h2>
+
+    <div class="input-table-wrap">
+      <table class="input-table">
+        <thead>
+          <tr>
+            <th class="col-url-th">画像URL <span class="col-required">必須</span></th>
+            <th class="col-folder-th">フォルダ <span class="col-optional">任意</span></th>
+            <th class="col-file-th">ファイル名 <span class="col-optional">任意</span></th>
+            <th class="col-del-th"></th>
+          </tr>
+        </thead>
+        <tbody id="row-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="table-controls">
+      <button id="add-row-btn" class="btn btn--ghost btn--sm">＋ 行を追加</button>
+      <button id="paste-toggle-btn" class="btn btn--ghost btn--sm">📋 一括貼り付け</button>
+      <button id="clear-btn" class="btn btn--ghost btn--sm">⊘ すべてクリア</button>
+    </div>
+
+    <!-- 一括貼り付けエリア -->
+    <div id="paste-section" class="paste-section">
+      <div class="field-label">タブ区切り / カンマ区切りで貼り付け（列順: URL · フォルダ · ファイル名）</div>
+      <textarea id="paste-area" class="paste-area"
+        placeholder="https://example.com/img1.jpg&#10;https://example.com/img2.jpg&#9;photos&#9;image2.jpg"></textarea>
+      <div id="col-map-row" class="col-map-row" style="display:none">
+        <span class="col-map-label">2列データの場合:</span>
+        <label class="radio-label">
+          <input type="radio" name="col-map" value="filename" checked>
+          URL + ファイル名
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="col-map" value="folder">
+          URL + フォルダ
+        </label>
+      </div>
+      <div>
+        <button id="apply-paste-btn" class="btn btn--primary btn--sm">表に反映</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ダウンロード設定 -->
+  <section class="card">
+    <h2 class="card-title">ダウンロード設定</h2>
+
+    <div class="download-settings">
+      <div class="form-field zip-name-field">
+        <label class="field-label" for="zip-name">ZIPファイル名</label>
+        <input type="text" id="zip-name" placeholder="images_download" autocomplete="off">
+      </div>
+      <button id="download-btn" class="btn btn--primary">↓ ZIPをダウンロード</button>
+    </div>
+
+    <div id="progress-wrap" class="progress-wrap">
+      <div class="progress-bar-track">
+        <div id="progress-fill" class="progress-bar-fill"></div>
+      </div>
+      <div id="progress-label" class="progress-label"></div>
+    </div>
+
+    <div id="status-msg" class="status-msg" aria-live="polite"></div>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <a href="/about" class="footer-about-link">ご利用について</a>
+    <div class="footer-author">Created by <strong>Akira Sasano</strong></div>
+  </div>
+</footer>
+
+<script src="/static/script.js"></script>
+</div><!-- #app-content -->
+</body>
+</html>
